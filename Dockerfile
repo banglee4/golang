@@ -1,7 +1,7 @@
 # Stage 1: Build dengan Go 1.24
 FROM golang:1.24 AS builder
 
-WORKDIR /app
+WORKDIR /golang
 
 # Salin semua file project ke container builder
 COPY . .
@@ -10,19 +10,19 @@ COPY . .
 RUN go mod download
 
 # Build binary bernama 'app' dari package di direktori saat ini
-RUN go build -o app .
+RUN go build modul .
 
 # Stage 2: Image runtime minimal
 FROM debian:bullseye-slim
 
-WORKDIR /app
+WORKDIR /golang
 
 # Copy hasil build dari builder
-COPY --from=builder /app/app .
+COPY --from=builder /golang/modul .
 
 # Expose port 8080, sesuai aplikasi Go listen di port ini
-EXPOSE 8080
+EXPOSE 3031
 
 # Jalankan binary aplikasi
-CMD ["./app"]
+CMD ["./modul"]
 
