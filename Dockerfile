@@ -10,7 +10,7 @@ COPY . .
 RUN go mod download
 
 # Build binary bernama 'app' dari package di direktori saat ini
-RUN go build modul .
+RUN go build -o modulv .
 
 # Stage 2: Image runtime minimal
 FROM debian:bullseye-slim
@@ -24,5 +24,5 @@ COPY --from=builder /golang/modul .
 EXPOSE 3031
 
 # Jalankan binary aplikasi
-CMD ["./modul"]
+CMD ["./modulv"]
 
