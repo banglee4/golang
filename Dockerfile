@@ -1,7 +1,7 @@
 # Stage 1: Build dengan Go 1.24
 FROM golang:1.24 as builder
 
-WORKDIR /app
+WORKDIR /
 
 # Salin dan build
 COPY . .
@@ -11,8 +11,8 @@ RUN go build -o app .
 # Stage 2: Image runtime minimal
 FROM debian:bullseye-slim
 
-WORKDIR /app
-COPY --from=builder /app/app .
+WORKDIR /
+COPY --from=builder / .
 
 EXPOSE 3001
 CMD ["./app"]
