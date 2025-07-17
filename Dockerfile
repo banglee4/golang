@@ -1,11 +1,12 @@
 # Stage 1: Build dengan Go 1.24
-FROM golang:1.24 AS builder
+FROM golang:1.22 AS builder
 
 WORKDIR /golang
 
 # Salin semua file project ke container builder
 COPY . .
-
+RUN go mod tidy
+RUN go clean -cache -modcache -i -r
 # Download dependencies
 RUN go mod download
 
